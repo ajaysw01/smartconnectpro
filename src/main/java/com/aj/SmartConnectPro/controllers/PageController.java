@@ -1,11 +1,10 @@
-package com.aj.SmartConnectPro.controller;
-
+package com.aj.SmartConnectPro.controllers;
 
 import com.aj.SmartConnectPro.entities.User;
 import com.aj.SmartConnectPro.forms.UserForm;
 import com.aj.SmartConnectPro.helpers.Message;
 import com.aj.SmartConnectPro.helpers.MessageType;
-import com.aj.SmartConnectPro.service.UserService;
+import com.aj.SmartConnectPro.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

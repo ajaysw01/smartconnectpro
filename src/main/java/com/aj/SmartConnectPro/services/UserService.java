@@ -1,10 +1,9 @@
-package com.aj.SmartConnectPro.service;
-
-import com.aj.SmartConnectPro.entities.User;
-import com.aj.SmartConnectPro.forms.UserForm;
+package com.aj.SmartConnectPro.services;
 
 import java.util.List;
 import java.util.Optional;
+
+import com.aj.SmartConnectPro.entities.User;
 
 public interface UserService {
 

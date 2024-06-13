@@ -1,4 +1,4 @@
-package com.aj.SmartConnectPro.service.impl;
+package com.aj.SmartConnectPro.services.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +11,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aj.SmartConnectPro.entities.User;
+import com.aj.SmartConnectPro.helpers.AppConstants;
 import com.aj.SmartConnectPro.helpers.ResourceNotFoundException;
-import com.aj.SmartConnectPro.repository.UserRepo;
-import com.aj.SmartConnectPro.service.UserService;
+import com.aj.SmartConnectPro.repsitories.UserRepo;
+import com.aj.SmartConnectPro.services.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

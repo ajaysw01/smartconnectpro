@@ -1,8 +1,9 @@
-package com.aj.SmartConnectPro.repository;
+package com.aj.SmartConnectPro.repsitories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.aj.SmartConnectPro.entities.User;
 
