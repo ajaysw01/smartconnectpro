@@ -4,33 +4,45 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aj.SmartConnectPro.entities.User;
-import com.aj.SmartConnectPro.repository.UserRepository;
-import com.aj.SmartConnectPro.service.UserService;
 import com.aj.SmartConnectPro.helpers.ResourceNotFoundException;
-
-import ch.qos.logback.classic.Logger;
+import com.aj.SmartConnectPro.repository.UserRepo;
+import com.aj.SmartConnectPro.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
-   
-    @Autowired
-    private UserRepository userRepo;
+public class UserServiceImpl implements UserService {
 
-    private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {
-        //user id have to generate 
+        // user id : have to generate
         String userId = UUID.randomUUID().toString();
         user.setUserId(userId);
-        //password encode
-        //user.setPasword(uderId)
+        // password encode
+        // user.setPassword(userId);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        // set the user role
+
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
+
+        logger.info(user.getProvider().toString());
+
         return userRepo.save(user);
+
     }
 
     @Override
@@ -40,8 +52,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Optional<User> updateUser(User user) {
-       User user2 = userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
-        //update user2 from user
+
+        User user2 = userRepo.findById(user.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        // update karenge user2 from user
         user2.setName(user.getName());
         user2.setEmail(user.getEmail());
         user2.setPassword(user.getPassword());
@@ -50,39 +64,44 @@ public class UserServiceImpl implements UserService{
         user2.setProfilePic(user.getProfilePic());
         user2.setEnabled(user.isEnabled());
         user2.setEmailVerified(user.isEmailVerified());
-        user2.setPhoneverified(user.isPhoneverified());
+        user2.setPhoneVerified(user.isPhoneVerified());
         user2.setProvider(user.getProvider());
         user2.setProviderUserId(user.getProviderUserId());
-        //save user to db
+        // save the user in database
         User save = userRepo.save(user2);
         return Optional.ofNullable(save);
+
     }
 
     @Override
     public void deleteUser(String id) {
         User user2 = userRepo.findById(id)
-            .orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         userRepo.delete(user2);
-    }
 
+    }
 
     @Override
     public boolean isUserExist(String userId) {
         User user2 = userRepo.findById(userId).orElse(null);
-        return user2 !=null ? true : false;
+        return user2 != null ? true : false;
     }
 
     @Override
     public boolean isUserExistByEmail(String email) {
-        User user =userRepo.findByEmail(email).orElse(null);
+        User user = userRepo.findByEmail(email).orElse(null);
         return user != null ? true : false;
-
-
     }
 
     @Override
     public List<User> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElse(null);
+
     }
 
 }
