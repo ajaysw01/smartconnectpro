@@ -12,6 +12,11 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+
+import com.aj.SmartConnectPro.entities.Providers;
+import com.aj.SmartConnectPro.entities.User;
+import com.aj.SmartConnectPro.helpers.AppConstants;
+
 import java.util.List;
 importcom.aj.SmartConnectPro.entities.Providers;
 importcom.aj.SmartConnectPro.entities.User;
